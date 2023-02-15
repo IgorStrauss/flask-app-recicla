@@ -23,6 +23,9 @@ class User(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(40), nullable=False)
+    password = db.Column(db.String(40), nullable=False)
+    endereco = db.relationship('Endereco', backref='user', uselist=False)
+    telefone = db.relationship('Telefone', backref='user', uselist=False)
 
     def __str__(self) -> str:
         return self.first_name
@@ -30,6 +33,31 @@ class User(db.Model):
     @property
     def username(self):
         return f"{self.last_name}{self.first_name}".lower()
+
+
+class Endereco(db.Model):
+    __tablename__ = "endereco"
+    id = db.Column(db.Integer, primary_key=True)
+    street = db.Column(db.String(30), nullable=False)
+    numero = db.Column(db.String(8), nullable=False)
+    bairro = db.Column(db.String(30), nullable=False)
+    cidade = db.Column(db.String(30), nullable=False)
+    estado = db.Column(db.String(30), nullable=False)
+    cep = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __str__(self) -> str:
+        return self.first_name
+
+
+class Telefone(db.Model):
+    __tablename__ = 'telefone'
+    id = db.Column(db.Integer, primary_key=True)
+    celular = db.Column(db.String(14), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __str__(self) -> str:
+        return self.username
 
 
 @app.route('/')
@@ -54,7 +82,10 @@ def delete(id):
 @app.route("/user/<int:id>")
 def perfil(id):
     user = User.query.get(id)
-    return render_template("user.html", user=user)
+    endereco = Endereco.query.filter_by(user_id=id).first()
+    telefone = Telefone.query.filter_by(user_id=id).first()
+    return render_template(
+        "user.html", user=user, endereco=endereco, telefone=telefone)
 
 
 if __name__ == "__main__":
