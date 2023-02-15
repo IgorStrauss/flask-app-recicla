@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "projeto-flask-recicla"
+version = "0.1.0"
+description = ""
+authors = ["igorsenna <engenheirostrauss2@gmail.com>"]
+readme = "README.md"
+packages = [{include = "projeto_flask_recicla"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+flask = "^2.2.2"
+psycopg2-binary = "^2.9.5"
+flask-bootstrap = "^3.3.7.1"
+flask-admin = "^1.6.0"
+flask-sqlalchemy = "^3.0.3"
+sqlalchemy-serializer = "^1.4.1"
+flask-migrate = "^4.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
