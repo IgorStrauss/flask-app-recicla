@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+     <title>Login</title>
+</head>
+<body>
+    
+    <div id="container">
+        <img src="{{url_for('static', filename='images/perfil.png')}}" alt="">
+
+        <form action="{{url_for('login')}}" method="post">
+
+            <div>
+                <input class="email" type="text" name="email" id="email" placeholder="Digite seu E-mail">
+            </div>
+            <div>
+                <input class="password" type="password" name="password" id="password" placeholder="Digite sua senha">
+            </div>
+            <div>
+                <input class="submit" type="submit" value="Entrar">
+            </div>
+            <br>
+            <div id="quero-me-cadastrar">
+                <span >Ainda não tem cadastro? <a href="{{url_for('register')}}">Quero me cadastrar</a></span>
+            </div>
+            <div>
+                <span >Esqueceu sua senha? <a href="#">Redefinir senha.</a></span>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
