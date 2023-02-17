@@ -11,9 +11,18 @@
     <title>Cadastrar</title>
 </head>
 <body>
-    
+    <!-- https://flask.palletsprojects.com/en/2.2.x/patterns/flashing/
     <div id="container">
-
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages%}
+                    <div>
+                        {{ messages }}
+                    </div>
+                    {% endfor %}
+            {% endif %}
+        {% endwith %}
+                -->
         <form action="{{url_for('register')}}" method="post">
 
             <div>
