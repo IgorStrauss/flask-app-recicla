@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style-index.css')}}" type="text/css">
+    <title>Home</title>
+</head>
+<body>
+    
+<div id="area-cabecalho">
+
+    <div id="area-logo">
+        <h1>Marques<span class="branco">Igor</span></h1>
+    </div>
+    <!--Inicio links principais de cabeçalho-->
+    <div id="area-menu">
+        {% if not current_user.is_authenticated %}
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">LOGIN</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
+        {% else %}
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">LOGOUT</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
+        {% endif %}
+    </div>
+    <!--Fim links de cabeçalho-->
+</div>
+    <div id="area-principal">
+        <div id="area-postagens">
+            <!--Inicio area de postagem-->
+            <div class="postagem">
+                <h2>Título da postagem</h2>
+                <span class="data-postagem">Postado em 01 de janeiro de 2023</span>
+                <img width="620px" src="imagens/imagem1.jpg" alt="">
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing
+                     and typesetting industry. Lorem Ipsum has been
+                      the industry's standard dummy text ever since the 1500s,
+                </p>
+                <a href="#">Leia mais >>></a>
+                <hr style="color: black;">
+            </div>
+            <!--Fim area de postagem-->
+
+            <!--Inicio area de postagem-->
+            <div class="postagem">
+                <h2>Título da postagem</h2>
+                <span class="data-postagem">Postado em 01 de janeiro de 2023</span>
+                <img width="620px" src="imagens/imagem2.jpg" alt="">
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing
+                     and typesetting industry. Lorem Ipsum has been
+                      the industry's standard dummy text ever since the 1500s,
+                </p>
+                <a href="#">Leia mais >>></a>
+            </div>
+            <!--Fim area de postagem-->
+        </div>
+        <!--Conteudo lateral 1-->
+        <div id="area-lateral">
+            <div class="conteudo-lateral">
+                <h3>Postagens recentes</h3>
+                <div>
+                    <p class="texto-lateral">Lorem Ipsum is simply dummy text of the printing
+                     and typesetting industry.</p>
+                     <a style="color: red;" href="#">Leia mais >>></a>
+                </div>
+                <hr style="color:black ;">
+                <div>
+                    <p class="texto-lateral">Lorem Ipsum is simply dummy text of the printing
+                     and typesetting industry.</p>
+                     <a style="color: red;" href="#">Leia mais >>></a>
+                </div>
+            </div>
+                
+        </div>
+
+        <div id="area-lateral">
+            <div class="conteudo-lateral">
+                <h3>Categorias</h3>
+                
+                <button type="button" class="btn btn-outline-secondary"><a href="#">categoria 1</a><br></button>
+                <button type="button" class="btn btn-outline-secondary"><a href="#">categoria 2</a><br></button>
+                <button type="button" class="btn btn-outline-secondary"><a href="#">categoria 3</a><br></button>
+                <button type="button" class="btn btn-outline-secondary"><a href="#">categoria 4</a><br></button>
+                <button type="button" class="btn btn-outline-secondary"><a href="#">categoria 5</a><br></button>
+
+
+                
+            </div>
+                
+        </div>
+                
+        </div>
+    </div>
+        
+        <!--Fim conteudo lateral 1-->
+    
+    <div id="rodape">
+        Todos os direitos reservados
+    </div>
+</body>
+</html>

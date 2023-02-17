@@ -15,6 +15,7 @@ flask-admin = "^1.6.0"
 flask-sqlalchemy = "^3.0.3"
 sqlalchemy-serializer = "^1.4.1"
 flask-migrate = "^4.0.4"
+flask-login = "0.6.2"
 
 
 [build-system]
