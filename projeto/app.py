@@ -24,7 +24,6 @@ migrate = Migrate(app, db)
 
 @login_manager.user_loader
 def current_user(user_id):
-    """Confere usuário que estará logado"""
     return User.query.get(user_id)
 
 
@@ -38,7 +37,7 @@ class User(db.Model, UserMixin):
     endereco = db.relationship('Endereco', backref='user', uselist=False)
     telefone = db.relationship('Telefone', backref='user', uselist=False)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.first_name
 
     @property
@@ -58,7 +57,8 @@ class Endereco(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __str__(self) -> str:
-        return self.first_name
+        return self.__name__
+
 
 
 class Telefone(db.Model):
@@ -68,7 +68,11 @@ class Telefone(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __str__(self) -> str:
-        return self.username
+        return self.__name__
+
+    @property
+    def formata_celular(self):
+        return f"({self.celular[:2]}) {self.celular[2]} {self.celular[3:7]}-{self.celular[7:]}"
 
 
 @app.route('/')
