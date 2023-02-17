@@ -4,7 +4,7 @@ from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from datetime import timedelta
 
 app = Flask(__name__)
 SECRET_KEY = "Alterar_secret_key"
@@ -60,7 +60,6 @@ class Endereco(db.Model):
         return self.__name__
 
 
-
 class Telefone(db.Model):
     __tablename__ = 'telefone'
     id = db.Column(db.Integer, primary_key=True)
@@ -112,15 +111,17 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        remember = request.form['remember']
         user = User.query.filter_by(email=email).first()
-        
+
         if not user:
             flash('Credenciais incorretas')
             return redirect(url_for('login'))
         if not check_password_hash(user.password, password):
             flash('Credenciais incorretas - senha')
             return redirect(url_for('login'))
-        login_user(user)
+        login_user(user, remember=remember, duration=timedelta(days=1))
+        flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
 
@@ -158,6 +159,7 @@ def register():
         telefone.user_id = user.id
         db.session.add(telefone)
         db.session.commit()
+        #flash('Usuário cadastrado com sucesso.')
         return redirect(url_for('users'))
     return render_template("register.html")
 
