@@ -4,7 +4,6 @@ from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import timedelta
 
 app = Flask(__name__)
 SECRET_KEY = "Alterar_secret_key"
@@ -111,7 +110,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        remember = request.form['remember']
         user = User.query.filter_by(email=email).first()
 
         if not user:
@@ -120,7 +118,7 @@ def login():
         if not check_password_hash(user.password, password):
             flash('Credenciais incorretas - senha')
             return redirect(url_for('login'))
-        login_user(user, remember=remember, duration=timedelta(days=1))
+        login_user(user)
         flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
