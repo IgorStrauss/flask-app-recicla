@@ -4,7 +4,8 @@ from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import timedelta
+from flask_bootstrap import Bootstrap
+from datetime import datetime
 
 app = Flask(__name__)
 SECRET_KEY = "Alterar_secret_key"
@@ -15,6 +16,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = \
     "postgresql://postgres:postgres@172.17.0.2/recicla"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+bootstrap = Bootstrap(app)
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -34,8 +37,15 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    criado = db.Column(db.DateTime, nullable=False)
     endereco = db.relationship('Endereco', backref='user', uselist=False)
     telefone = db.relationship('Telefone', backref='user', uselist=False)
+    solicitar_coleta = db.relationship(
+        'SolicitaColeta', backref='user', uselist=False)
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__()
+        self.criado = datetime.now()
 
     def __str__(self):
         return self.first_name
@@ -71,7 +81,23 @@ class Telefone(db.Model):
 
     @property
     def formata_celular(self):
-        return f"({self.celular[:2]}) {self.celular[2]} {self.celular[3:7]}-{self.celular[7:]}"
+        return f"({self.celular[:2]})\
+            {self.celular[2]} {self.celular[3:7]}-{self.celular[7:]}"
+
+
+class SolicitaColeta(db.Model):
+    __tablename__ = 'solicitar_coleta'
+    id = db.Column(db.Integer, primary_key=True)
+    tipo = db.Column(db.String(20), nullable=False)
+    quantidade = db.Column(db.String(2), nullable=False)
+    situacao = db.Column(db.String(50))
+    descricao = db.Column(db.String(100))
+    criado = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__()
+        self.criado = datetime.now()
 
 
 @app.route('/')
@@ -111,7 +137,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        remember = request.form['remember']
         user = User.query.filter_by(email=email).first()
 
         if not user:
@@ -120,7 +145,7 @@ def login():
         if not check_password_hash(user.password, password):
             flash('Credenciais incorretas - senha')
             return redirect(url_for('login'))
-        login_user(user, remember=remember, duration=timedelta(days=1))
+        login_user(user)
         flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
@@ -162,6 +187,12 @@ def register():
         #flash('Usuário cadastrado com sucesso.')
         return redirect(url_for('users'))
     return render_template("register.html")
+
+
+@app.route("/coleta/add")
+def solicitar_coleta():
+    form = SolicitarColetaForm()
+    return render_template("coleta.html", form=form)
 
 
 if __name__ == "__main__":

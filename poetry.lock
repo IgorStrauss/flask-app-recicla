@@ -91,6 +91,19 @@ Flask = ">=0.8"
 visitor = "*"
 
 [[package]]
+name = "flask-bootstrap4"
+version = "4.0.2"
+description = "An extension that includes Bootstrap in your project, without any boilerplate code."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+dominate = "*"
+Flask = ">=0.8"
+visitor = "*"
+
+[[package]]
 name = "flask-login"
 version = "0.6.2"
 description = "User authentication and session management for Flask."
@@ -126,6 +139,22 @@ python-versions = ">=3.7"
 [package.dependencies]
 Flask = ">=2.2"
 SQLAlchemy = ">=1.4.18"
+
+[[package]]
+name = "flask-wtf"
+version = "1.1.1"
+description = "Form rendering, validation, and CSRF protection for Flask with WTForms."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Flask = "*"
+itsdangerous = "*"
+WTForms = "*"
+
+[package.extras]
+email = ["email-validator"]
 
 [[package]]
 name = "greenlet"
@@ -329,7 +358,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "62868fcabcdefa2063c00f392ee80feb37bd34bea46b7607fe0f61465928d6f4"
+content-hash = "d65ce1f2bf072e8a7441a461738febfe16b807a5c5f33fbc880e1f0669d7dee2"
 
 [metadata.files]
 alembic = [
@@ -358,6 +387,10 @@ flask-admin = [
 flask-bootstrap = [
     {file = "Flask-Bootstrap-3.3.7.1.tar.gz", hash = "sha256:cb08ed940183f6343a64e465e83b3a3f13c53e1baabb8d72b5da4545ef123ac8"},
 ]
+flask-bootstrap4 = [
+    {file = "Flask-Bootstrap4-4.0.2.tar.gz", hash = "sha256:fcd52206a844573692b86ee79522f970363eb1df29f57c2eb52bd2cbc6ffb9ee"},
+    {file = "Flask_Bootstrap4-4.0.2-py3-none-any.whl", hash = "sha256:92780298aa8c22f34be4b4ed7cb4cdec1f5302b625cda7f519dc9aa6e1d0d023"},
+]
 flask-login = [
     {file = "Flask-Login-0.6.2.tar.gz", hash = "sha256:c0a7baa9fdc448cdd3dd6f0939df72eec5177b2f7abe6cb82fc934d29caac9c3"},
     {file = "Flask_Login-0.6.2-py3-none-any.whl", hash = "sha256:1ef79843f5eddd0f143c2cd994c1b05ac83c0401dc6234c143495af9a939613f"},
@@ -369,6 +402,10 @@ flask-migrate = [
 flask-sqlalchemy = [
     {file = "Flask-SQLAlchemy-3.0.3.tar.gz", hash = "sha256:2764335f3c9d7ebdc9ed6044afaf98aae9fa50d7a074cef55dde307ec95903ec"},
     {file = "Flask_SQLAlchemy-3.0.3-py3-none-any.whl", hash = "sha256:add5750b2f9cd10512995261ee2aa23fab85bd5626061aa3c564b33bb4aa780a"},
+]
+flask-wtf = [
+    {file = "Flask-WTF-1.1.1.tar.gz", hash = "sha256:41c4244e9ae626d63bed42ae4785b90667b885b1535d5a4095e1f63060d12aa9"},
+    {file = "Flask_WTF-1.1.1-py3-none-any.whl", hash = "sha256:7887d6f1ebb3e17bf648647422f0944c9a469d0fcf63e3b66fb9a83037e38b2c"},
 ]
 greenlet = [
     {file = "greenlet-2.0.2-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:bdfea8c661e80d3c1c99ad7c3ff74e6e87184895bbaca6ee8cc61209f8b9b85d"},
