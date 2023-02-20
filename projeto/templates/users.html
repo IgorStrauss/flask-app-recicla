@@ -17,9 +17,6 @@
 <body>
     {% block content %}
     <h1>Lista de usuários</h1>
-    <a href="{{url_for('index')}}"><button type="button" class="btn btn-outline-primary btn-sm">HOME</button></a>
-    <br>
-    <hr>
     {% for user in users %}
     <ul class="list-group list.group-flush">
         <li class="list-group-item">

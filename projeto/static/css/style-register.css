@@ -1,15 +1,16 @@
-body{
+
+ body{
     font-family: 'Secular One', sans-serif;
-    background: #4876ff url(static/fundo.jpg) no-repeat top center;
+    background: #4876ff url(../imagens/fundo.jpg) no-repeat top center;
 
 }
 #container{
     width: 400px;
-    height: 741px;
+    height: 710px;
     background-color: rgba(255,255,255,0.3);
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 35px;
     -webkit-border-radius:10px;
     -moz-border-radius:10px;
     text-align: center;
@@ -18,16 +19,16 @@ body{
     width: 120px;
     height: 120px;
     margin-top: -60px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 #quero-me-cadastrar{
     margin-top: -1em;
  }
 input{
-    height: 40px;
+    height: 32px;
     width: 80%;
     font-size: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     margin-top:20px;
     background-color: #fff;
     padding-left: 15px;
@@ -36,7 +37,7 @@ input{
     background-position: 10px;
 }
 input.email{
-    background-image: url(../imagens/icone-usuario.png) ;
+    background-image: url(../imagens/icone-usuario.png);
 }
 input.password{
     background-image: url(../imagens/icone-cadeado.png);
