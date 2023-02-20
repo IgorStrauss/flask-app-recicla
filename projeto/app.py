@@ -189,7 +189,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/coleta/add")
+@app.route("/coleta/add", methods=["GET", "POST"])
 def solicitar_coleta():
     form = SolicitarColetaForm()
     return render_template("coleta.html", form=form)
