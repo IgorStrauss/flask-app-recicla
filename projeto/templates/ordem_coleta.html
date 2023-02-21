@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} <title> Ordens de coleta </title>{% endblock %}
+{% block content %}
+
+
+{% for coleta in solicita_coleta %}
+<h2>Ordem de coleta numero {{coleta.id}} </h2>
+<div>
+    <span>ID: {{coleta.user_id}}</span>
+    <span>Nome: {{current_user.first_name}}</span><br>
+    <span>Sobrenome: {{current_user.last_name}}</span><br>
+    <span>E-mail: {{current_user.email}}</span><br>
+    <span>Telefone: {{current_user.telefone.celular}}</span><br>
+    <span>Endereço: {{current_user.endereco.street}}</span><br>
+    <span>Bairro: {{current_user.endereco.bairro}}</span><br>
+
+
+    <span>Criado em: {{coleta.criado}}</span><br>
+    <span>Tipo de equipamento: {{coleta.tipo}}</span><br>
+    <span>Quantidade de equipamentos: {{coleta.quantidade}}</span><br>
+    <span>Aparelho está funcionando?: {{coleta.situacao}}</span><br>
+    <span>Descrição do(s) equipamento(s): {{coleta.descricao}}</span><br>
+ 
+</div>
+
+
+{% endfor %}
+
+{% endblock %}

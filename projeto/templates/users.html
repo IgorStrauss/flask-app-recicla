@@ -20,7 +20,7 @@
     {% for user in users %}
     <ul class="list-group list.group-flush">
         <li class="list-group-item">
-            <span>ID{{user.id}}</span> |
+            <span>ID: {{user.id}}</span> |
             <span>Nome: {{user.first_name}}</span> |
             <span>Sobrenome: {{user.last_name}}</span> |
             <a><span>Usuário: <a href="{{url_for('perfil',id=user.id)}}">{{user.username}}</a>  </span> |

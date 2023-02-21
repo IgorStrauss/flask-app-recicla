@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
-    login_required, login_user, logout_user
+    login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 from datetime import datetime
@@ -30,6 +30,12 @@ def current_user(user_id):
     return User.query.get(user_id)
 
 
+coleta_in_user = db.Table("coleta_user",
+                          db.Column("user_id", db.Integer, db.ForeignKey("user.id"), nullable=False),
+                          db.Column("coleta_id", db.Integer, db.ForeignKey("solicitar_coleta.id"), nullable=False),
+                           )
+
+
 class User(db.Model, UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -40,9 +46,6 @@ class User(db.Model, UserMixin):
     criado = db.Column(db.DateTime, nullable=False)
     endereco = db.relationship('Endereco', backref='user', uselist=False)
     telefone = db.relationship('Telefone', backref='user', uselist=False)
-    solicitar_coleta = db.relationship(
-        'SolicitaColeta', backref='user', uselist=False)
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
         self.criado = datetime.now()
@@ -53,7 +56,7 @@ class User(db.Model, UserMixin):
     @property
     def username(self):
         return f"{self.last_name}{self.first_name}".lower()
-
+    
 
 class Endereco(db.Model):
     __tablename__ = "endereco"
@@ -93,7 +96,6 @@ class SolicitaColeta(db.Model):
     situacao = db.Column(db.String(50))
     descricao = db.Column(db.String(100))
     criado = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
@@ -140,15 +142,16 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if not user:
-            flash('Credenciais incorretas')
+            flash('Credenciais incorretas - E-mail', 'danger')
             return redirect(url_for('login'))
         if not check_password_hash(user.password, password):
-            flash('Credenciais incorretas - senha')
+            flash('Credenciais incorretas - senha', 'danger')
             return redirect(url_for('login'))
         login_user(user)
-        flash('Usuário logado com sucesso.')
+        #flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
+
 
 
 @app.route("/logout")
@@ -190,9 +193,30 @@ def register():
 
 
 @app.route("/coleta/add", methods=["GET", "POST"])
+@login_required
 def solicitar_coleta():
-    form = SolicitarColetaForm()
-    return render_template("coleta.html", form=form)
+    if request.method == "POST":
+        coleta = SolicitaColeta()
+        coleta.tipo = request.form['tipo']
+        coleta.quantidade = request.form['quantidade']
+        coleta.situacao = request.form['situacao']
+        coleta.descricao = request.form['descricao']
+        db.session.add(coleta)
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    return render_template("coleta.html")
+
+
+@app.route("/coleta/view")
+def view_coleta():
+    solicita_coleta = SolicitaColeta.query.all()
+    user = User.query.all()
+    return render_template(
+        "ordem_coleta.html", solicita_coleta=solicita_coleta, user=user)
+
+
+
 
 
 if __name__ == "__main__":

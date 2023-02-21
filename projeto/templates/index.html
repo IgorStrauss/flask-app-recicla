@@ -24,11 +24,19 @@
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
+        <li>Olá, seja bem vinda(o), para solicitar coleta, favor realizar<a href="{{url_for('login')}}">login</a></li>
         {% else %}
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">LOGOUT</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('solicitar_coleta')}}">SOLICITAR COLETA</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="#">EDITAR PERFIL</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">SAIR</a></button>
+
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('solicitar_coleta')}}">COLETA</a></button>
+       <li>
+
+           Olá {{current_user.first_name}} {{current_user.last_name}}, seja bem vinda(o)
+       </li>
+
+        <span></span>
         {% endif %}
     </div>
     <!--Fim links de cabeçalho-->
@@ -69,8 +77,8 @@
             <div class="conteudo-lateral">
                 <h3>Postagens recentes</h3>
                 <div>
-                    <p class="texto-lateral">Lorem Ipsum is simply dummy text of the printing
-                     and typesetting industry.</p>
+                    <p class="texto-lateral">Para solicitar coleta de um ou mais
+                        equipamentos eletrônicos, realizar login para prosseguir.</p>
                      <a style="color: red;" href="#">Leia mais >>></a>
                 </div>
                 <hr style="color:black ;">
