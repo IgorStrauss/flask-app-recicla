@@ -31,9 +31,14 @@ def current_user(user_id):
 
 
 coleta_in_user = db.Table("coleta_user",
-                          db.Column("user_id", db.Integer, db.ForeignKey("user.id"), nullable=False),
-                          db.Column("coleta_id", db.Integer, db.ForeignKey("solicitar_coleta.id"), nullable=False),
-                           )
+                          db.Column(
+                              "user_id", db.Integer, db.ForeignKey("user.id"),
+                              nullable=False),
+                          db.Column(
+                              "solicitar_coleta", db.Integer,
+                              db.ForeignKey("solicitar_coleta.id"),
+                              nullable=False)
+                          )
 
 
 class User(db.Model, UserMixin):
@@ -46,6 +51,9 @@ class User(db.Model, UserMixin):
     criado = db.Column(db.DateTime, nullable=False)
     endereco = db.relationship('Endereco', backref='user', uselist=False)
     telefone = db.relationship('Telefone', backref='user', uselist=False)
+    solicitar_coleta = db.relationship(
+        'SolicitaColeta', backref='user', uselist=False)
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
         self.criado = datetime.now()
@@ -56,7 +64,7 @@ class User(db.Model, UserMixin):
     @property
     def username(self):
         return f"{self.last_name}{self.first_name}".lower()
-    
+
 
 class Endereco(db.Model):
     __tablename__ = "endereco"
@@ -96,6 +104,7 @@ class SolicitaColeta(db.Model):
     situacao = db.Column(db.String(50))
     descricao = db.Column(db.String(100))
     criado = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
@@ -206,6 +215,7 @@ def solicitar_coleta():
         return redirect(url_for('index'))
 
     return render_template("coleta.html")
+
 
 
 @app.route("/coleta/view")
