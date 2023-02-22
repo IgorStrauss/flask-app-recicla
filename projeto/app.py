@@ -18,7 +18,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = \
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-bootstrap = Bootstrap(app)
+Bootstrap(app)
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
