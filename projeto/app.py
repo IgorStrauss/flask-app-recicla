@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, session, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
@@ -6,6 +6,7 @@ from flask_login import LoginManager, UserMixin, \
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 from datetime import datetime
+
 
 app = Flask(__name__)
 SECRET_KEY = "Alterar_secret_key"
@@ -28,17 +29,6 @@ migrate = Migrate(app, db)
 @login_manager.user_loader
 def current_user(user_id):
     return User.query.get(user_id)
-
-
-coleta_in_user = db.Table("coleta_user",
-                          db.Column(
-                              "user_id", db.Integer, db.ForeignKey("user.id"),
-                              nullable=False),
-                          db.Column(
-                              "solicitar_coleta", db.Integer,
-                              db.ForeignKey("solicitar_coleta.id"),
-                              nullable=False)
-                          )
 
 
 class User(db.Model, UserMixin):
@@ -81,6 +71,7 @@ class Endereco(db.Model):
         return self.__name__
 
 
+
 class Telefone(db.Model):
     __tablename__ = 'telefone'
     id = db.Column(db.Integer, primary_key=True)
@@ -108,9 +99,20 @@ class SolicitaColeta(db.Model):
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
-        self.criado = datetime.now()
-
-
+        self.criado = datetime.now().strftime("%B/%d/%y ,%H:%M:%S")
+        
+    def formata_tipo(self):
+        return self.tipo.title()
+            
+    
+    def formata_situacao(self):
+        return self.situacao.title()
+    
+    
+    def formata_descricao(self):
+        return self.descricao.title()
+    
+    
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -139,7 +141,8 @@ def perfil(id):
     endereco = Endereco.query.filter_by(user_id=id).first()
     telefone = Telefone.query.filter_by(user_id=id).first()
     return render_template(
-        "user.html", user=user, endereco=endereco, telefone=telefone)
+        "user.html", user=user,
+        endereco=endereco, telefone=telefone)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -189,21 +192,23 @@ def register():
         endereco.estado = request.form['estado']
         endereco.cep = request.form['cep']
         endereco.user_id = user.id
-        telefone = Telefone()
         db.session.add(endereco)
         db.session.commit()
+        telefone = Telefone()
         telefone.celular = request.form['celular']
         telefone.user_id = user.id
         db.session.add(telefone)
         db.session.commit()
-        #flash('Usuário cadastrado com sucesso.')
-        return redirect(url_for('users'))
+
+        return redirect(url_for('login'))
     return render_template("register.html")
 
 
-@app.route("/coleta/add", methods=["GET", "POST"])
-@login_required
-def solicitar_coleta():
+
+@app.route("/user/<int:id>/coleta/add", methods=["GET", "POST"])
+def coleta_usuario(id):
+    user = User.query.get(id)
+    
     if request.method == "POST":
         coleta = SolicitaColeta()
         coleta.tipo = request.form['tipo']
@@ -214,19 +219,22 @@ def solicitar_coleta():
         db.session.commit()
         return redirect(url_for('index'))
 
-    return render_template("coleta.html")
+    return render_template(
+        "coleta.html", user=user)
 
 
 
 @app.route("/coleta/view")
 def view_coleta():
     solicita_coleta = SolicitaColeta.query.all()
+    
     user = User.query.all()
+
     return render_template(
-        "ordem_coleta.html", solicita_coleta=solicita_coleta, user=user)
-
-
-
+        "ordem_coleta.html",
+        solicita_coleta=solicita_coleta,
+        user=user
+        )
 
 
 if __name__ == "__main__":
