@@ -20,14 +20,19 @@
     <!--Inicio links principais de cabeçalho-->
     <div id="area-menu">
         {% if not current_user.is_authenticated %}
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">LOGIN</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">ENTRAR</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
+        <li>Olá, seja bem vinda(o), para solicitar coleta, favor realizar<a href="{{url_for('login')}}">login</a></li>
         {% else %}
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">LOGOUT</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('coleta_usuario', id=current_user.id)}}">SOLICITAR COLETA</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">SAIR</a></button>
+       <li>
+
+           Olá {{current_user.first_name}} {{current_user.last_name}}, seja bem vinda(o)
+       </li>
+
+        <span></span>
         {% endif %}
     </div>
     <!--Fim links de cabeçalho-->
@@ -36,15 +41,21 @@
         <div id="area-postagens">
             <!--Inicio area de postagem-->
             <div class="postagem">
-                <h2>Título da postagem</h2>
-                <span class="data-postagem">Postado em 01 de janeiro de 2023</span>
+                <h2>Lixo eletrônico</h2>
+               <!-- <span class="data-postagem">Postado em 01 de janeiro de 2023</span> -->
                 <img width="620px" src="imagens/imagem1.jpg" alt="">
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing
-                     and typesetting industry. Lorem Ipsum has been
-                      the industry's standard dummy text ever since the 1500s,
+                    Resíduo computacional, também conhecido como resíduo
+                     eletrônico ou lixo eletrônico, são os equipamentos
+                      eletrônicos descartados ou obsoletos.[1] A definição
+                       inclui computadores, televisores, telemóveis/celulares,
+                        entre outros dispositivos. Na União Europeia, é
+                         referido resíduo de equipamentos eletrônicos (REEE),
+                         [2] havendo a classificação dos produtos por
+                          categoria conforme a Diretiva de Resíduos de
+                           Equipamentos Eléctricos e Electrónicos.[3] 
                 </p>
-                <a href="#">Leia mais >>></a>
+                <a href="https://pt.wikipedia.org/wiki/Res%C3%ADduo_eletr%C3%B4nico">Leia mais >>></a>
                 <hr style="color: black;">
             </div>
             <!--Fim area de postagem-->
@@ -52,12 +63,10 @@
             <!--Inicio area de postagem-->
             <div class="postagem">
                 <h2>Título da postagem</h2>
-                <span class="data-postagem">Postado em 01 de janeiro de 2023</span>
-                <img width="620px" src="imagens/imagem2.jpg" alt="">
+              <!--  <span class="data-postagem">Postado em 01 de janeiro de 2023</span> -->
+                <img width="620px" src="{{url_for('static', filename='images/contato_coleta.png')}}" alt="">
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing
-                     and typesetting industry. Lorem Ipsum has been
-                      the industry's standard dummy text ever since the 1500s,
+                    
                 </p>
                 <a href="#">Leia mais >>></a>
             </div>
@@ -68,8 +77,8 @@
             <div class="conteudo-lateral">
                 <h3>Postagens recentes</h3>
                 <div>
-                    <p class="texto-lateral">Lorem Ipsum is simply dummy text of the printing
-                     and typesetting industry.</p>
+                    <p class="texto-lateral">Para solicitar coleta de um ou mais
+                        equipamentos eletrônicos, realizar login para prosseguir.</p>
                      <a style="color: red;" href="#">Leia mais >>></a>
                 </div>
                 <hr style="color:black ;">

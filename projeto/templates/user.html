@@ -29,13 +29,13 @@
     <li>CEP: {{endereco.cep}}</li>
     <br>
     <h3>Telefone</h3>
-    <li>Telefone: {{telefone.formata_celular}}</li>
+    <li>Telefone: </li>
     <li>ID: {{telefone.id}}</li>
     <li></li>
     <br>
     <a href="{{url_for('index')}}"><button type="button" class="btn btn-outline-success btn-sm">Retornar</button></a>
     <a href="{{url_for('delete', id=user.id)}}"><button type="button" class="btn btn-outline-danger btn-sm">Deletar</button></a>
-    <a href="#"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
+    <a href="{{url_for('coleta_usuario', id=user.id)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
     <br>
 
 </body>
