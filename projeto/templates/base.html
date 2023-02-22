@@ -28,9 +28,12 @@
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
         {% else %}
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('index')}}">HOME</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">LOGOUT</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR USUÁRIO</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">LISTAR USUÁRIOS</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('view_coleta')}}">VISUALIZAR OC</a></button>
+
         {% endif %}
     </div>
     <!--Fim links de cabeçalho-->
