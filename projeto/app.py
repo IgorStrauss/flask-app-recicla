@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
-    login_required, login_user, logout_user, current_user
+    login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 from datetime import datetime
@@ -47,13 +47,18 @@ class User(db.Model, UserMixin):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
         self.criado = datetime.now()
+        
+    @property
+    def formata_data(self):
+        return f"{self.criado.day}/{self.criado.month}/{self.criado.year} as \
+            {self.criado.hour}:{self.criado.minute}"
 
     def __str__(self):
         return self.first_name
 
     @property
     def username(self):
-        return f"{self.last_name}{self.first_name}".lower()
+        return f"{self.last_name}{self.first_name}".upper()
 
 
 class Endereco(db.Model):
@@ -69,7 +74,6 @@ class Endereco(db.Model):
 
     def __str__(self) -> str:
         return self.__name__
-
 
 
 class Telefone(db.Model):
@@ -97,22 +101,21 @@ class SolicitaColeta(db.Model):
     criado = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__()
-        self.criado = datetime.now().strftime("%B/%d/%y ,%H:%M:%S")
-        
+    @property
+    def formata_data(self):
+        return f"{self.criado.day}/{self.criado.month}/{self.criado.year} as \
+            {self.criado.hour}:{self.criado.minute}"
+
     def formata_tipo(self):
-        return self.tipo.title()
-            
-    
+        return {self.tipo}.title()
+
     def formata_situacao(self):
         return self.situacao.title()
-    
-    
+
     def formata_descricao(self):
         return self.descricao.title()
-    
-    
+
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -208,7 +211,7 @@ def register():
 @app.route("/user/<int:id>/coleta/add", methods=["GET", "POST"])
 def coleta_usuario(id):
     user = User.query.get(id)
-    
+
     if request.method == "POST":
         coleta = SolicitaColeta()
         coleta.tipo = request.form['tipo']
@@ -223,18 +226,25 @@ def coleta_usuario(id):
         "coleta.html", user=user)
 
 
-
 @app.route("/coleta/view")
 def view_coleta():
     solicita_coleta = SolicitaColeta.query.all()
-    
-    user = User.query.all()
+
+    user = current_user
 
     return render_template(
         "ordem_coleta.html",
         solicita_coleta=solicita_coleta,
         user=user
         )
+
+
+@app.route("/coleta/view/<int:id>")
+def show_coleta(id):
+    coleta = SolicitaColeta.query.get(id)
+    return render_template(
+        "show_coleta.html",
+        coleta=coleta)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,9 @@
 
 
 {% for coleta in solicita_coleta %}
-<h2>Ordem de coleta numero {{coleta.id}} </h2>
+
+<button type="button" class="btn btn-outline-danger"><a href="{{url_for('show_coleta', id=coleta.id)}}">Ordem de coleta numero: {{coleta.id}}</a></button>
+
 <div>
     <span>ID: {{coleta.user_id}}</span><br>
     <span>Nome:{{user.first_name}} </span><br>
