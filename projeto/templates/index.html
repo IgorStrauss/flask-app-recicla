@@ -22,7 +22,7 @@
         {% if not current_user.is_authenticated %}
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">ENTRAR</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('link_ajuda')}}">Ajuda</a></button>     
         <li>Olá, seja bem vinda(o), para solicitar coleta, favor realizar<a href="{{url_for('login')}}">login</a></li>
         {% else %}
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('coleta_usuario', id=current_user.id)}}">SOLICITAR COLETA</a></button>
@@ -31,6 +31,8 @@
 
            Olá {{current_user.first_name}} {{current_user.last_name}}, seja bem vinda(o)
        </li>
+
+       
 
         <span></span>
         {% endif %}
@@ -62,35 +64,43 @@
 
             <!--Inicio area de postagem-->
             <div class="postagem">
-                <h2>Título da postagem</h2>
+               <!-- <h2>Título da postagem</h2> -->
               <!--  <span class="data-postagem">Postado em 01 de janeiro de 2023</span> -->
-                <img width="620px" src="{{url_for('static', filename='images/contato_coleta.png')}}" alt="">
+                <img width="620px" src="{{url_for('static', filename='images/coleta-recicla.jpg')}}" alt="">
                 <p>
                     
                 </p>
-                <a href="#">Leia mais >>></a>
+               <!-- <a href="#">Leia mais >>></a> -->
             </div>
             <!--Fim area de postagem-->
         </div>
         <!--Conteudo lateral 1-->
         <div id="area-lateral">
             <div class="conteudo-lateral">
-                <h3>Postagens recentes</h3>
+                <h3>Visualização lateral</h3>
                 <div>
-                    <p class="texto-lateral">Para solicitar coleta de um ou mais
-                        equipamentos eletrônicos, realizar login para prosseguir.</p>
-                     <a style="color: red;" href="#">Leia mais >>></a>
-                </div>
+                <img width="280px" src="{{url_for('static', filename='images/Marketing-digital-1.jpg')}}" alt="">
+
+                    <p class="texto-lateral">Area reservada para postagens
+                        ou propaganda.</p>
+                        <a style="color: red;" href="#">Leia mais >>></a>
+                        <img width="280px" src="{{url_for('static', filename='images/coleta-pilhas.jpg')}}" alt="">
+                    <br>
+                    </div>
                 <hr style="color:black ;">
                 <div>
-                    <p class="texto-lateral">Lorem Ipsum is simply dummy text of the printing
-                     and typesetting industry.</p>
+                    <p class="texto-lateral">As pilhas e baterias de uso
+                         doméstico apresentam um grande perigo quando
+                          descartadas incorretamente. Na composição dessas
+                           pilhas são encontrados metais pesados como: cádmio,
+                            chumbo, mercúrio, que são extremamente perigosos à
+                             saúde humana..</p>
                      <a style="color: red;" href="#">Leia mais >>></a>
                 </div>
             </div>
                 
         </div>
-
+<!--
         <div id="area-lateral">
             <div class="conteudo-lateral">
                 <h3>Categorias</h3>
@@ -106,7 +116,7 @@
             </div>
                 
         </div>
-                
+             -->   
         </div>
     </div>
         
@@ -114,6 +124,10 @@
     
     <div id="rodape">
         Todos os direitos reservados
+        <button type="button" class="btn btn-outline-dark"><a href="https://www.linkedin.com/in/igor-senna-a336bb181">linkedin</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="https://github.com/IgorStrauss">github</a></button>
+        engenheirostrauss2@gmail.com
+        
     </div>
 </body>
 </html>

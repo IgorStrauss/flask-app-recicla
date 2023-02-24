@@ -113,17 +113,11 @@ h3{
     height: auto;
     margin-left: 47rem;
     }
-div span{
-    text-align: center;
-    text-decoration-color: black;
-    font-size: 1.1rem;
-    border: 1px solid;
-    border-block: 1rem;
-}
+
 div h4{
     text-align: auto;
 }
-
+ 
 .show_status{
     margin-left: 1rem;
 }
@@ -132,5 +126,6 @@ div h4{
 }
 .lc_header{
     text-align: center;
-    text-decoration:underline
+    text-decoration:black;
+    margin-top: 1rem;
 }

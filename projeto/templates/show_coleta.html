@@ -2,7 +2,7 @@
 
 
 
-{% block title %} <title> Visualizar coleta </title>{% endblock %}
+{% block title %}  Visualizar coleta {% endblock %}
 {% block content %}
  
 <h4 class="lc_header">Visualizar coleta numero: [ {{coleta.id}} ] solicitada em {{coleta.formata_data}}</h4>
@@ -13,14 +13,21 @@
         
             <h4>Status da coleta:</h4>
         </div>
-        <div class="show_status">
-            <button type="button" class="btn btn-danger">Sem contato com cliente</button>
-        </div>
-        <!--
+        <!--        <select name= status method="GET" action="">
+            {% for stat in status %}
+            <option value= "{{status[]}}" SELECTED>{{stat}}</option>"
+            {% endfor %}
+        </select>
+        -->
+
         <div class="show_status">
             <button type="button" class="btn btn-primary">Solicitada</button> 
         </div>
-        <div class="show_status">
+        <!--
+            <div class="show_status">
+                <button type="button" class="btn btn-danger">Sem contato com cliente</button>
+            </div>
+            <div class="show_status">
             <button type="button" class="btn btn-info">Em tratamento</button>
         </div>
         <div class="show_status">
