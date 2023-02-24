@@ -2,13 +2,15 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
-    login_required, login_user, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
+    login_required, login_user, logout_user, current_user
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_bootstrap import Bootstrap
 from datetime import datetime
 
 
 app = Flask(__name__)
+
+
 SECRET_KEY = "Alterar_secret_key"
 
 app.config['SECRET_KEY'] = 'Secret_key_development'
@@ -55,6 +57,14 @@ class User(db.Model, UserMixin):
 
     def __str__(self):
         return self.first_name
+    
+    @property
+    def firstname(self):
+        return f"{self.first_name}".title()
+    
+    @property
+    def lastname(self):
+        return f"{self.last_name}".title()
 
     @property
     def username(self):
@@ -101,6 +111,10 @@ class SolicitaColeta(db.Model):
     criado = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__()
+        self.criado = datetime.now()
+
     @property
     def formata_data(self):
         return f"{self.criado.day}/{self.criado.month}/{self.criado.year} as \
@@ -110,10 +124,10 @@ class SolicitaColeta(db.Model):
         return {self.tipo}.title()
 
     def formata_situacao(self):
-        return self.situacao.title()
+        return {self.situacao}.title()
 
     def formata_descricao(self):
-        return self.descricao.title()
+        return {self.descricao}.title()
 
 
 @app.route('/')
@@ -163,10 +177,8 @@ def login():
             flash('Credenciais incorretas - senha', 'danger')
             return redirect(url_for('login'))
         login_user(user)
-        #flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
-
 
 
 @app.route("/logout")
@@ -174,6 +186,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -213,6 +226,7 @@ def coleta_usuario(id):
     user = User.query.get(id)
 
     if request.method == "POST":
+        
         coleta = SolicitaColeta()
         coleta.tipo = request.form['tipo']
         coleta.quantidade = request.form['quantidade']
@@ -229,13 +243,9 @@ def coleta_usuario(id):
 @app.route("/coleta/view")
 def view_coleta():
     solicita_coleta = SolicitaColeta.query.all()
-
-    user = current_user
-
     return render_template(
         "ordem_coleta.html",
-        solicita_coleta=solicita_coleta,
-        user=user
+        solicita_coleta=solicita_coleta
         )
 
 

@@ -1,39 +1,58 @@
 {% extends 'base.html' %}
 
+
+
 {% block title %} <title> Visualizar coleta </title>{% endblock %}
 {% block content %}
+ 
+<h4 class="lc_header">Visualizar coleta numero: [ {{coleta.id}} ] solicitada em {{coleta.formata_data}}</h4>
 
-<h2>Visualizar coleta solicitada em {{coleta.formata_data}}</h2>
-<div>
+
+<div id="conteudo">
+    <div class="lc_status">
+        
+            <h4>Status da coleta:</h4>
+        </div>
+        <div class="show_status">
+            <button type="button" class="btn btn-danger">Sem contato com cliente</button>
+        </div>
+        <!--
+        <div class="show_status">
+            <button type="button" class="btn btn-primary">Solicitada</button> 
+        </div>
+        <div class="show_status">
+            <button type="button" class="btn btn-info">Em tratamento</button>
+        </div>
+        <div class="show_status">
+            <button type="button" class="btn btn-warning">Agendada coleta</button>
+        </div>
+        <div class="show_status">
+            <button type="button" class="btn btn-success">Coleta realizada</button>
+        </div>
+        -->
     <br>
-    <h3>Coleta numero: {{coleta.id}}</h3>
-    <br>
-    <h4>Dados usuario</h4>
-    <span>ID: </span><br>
-    <span>Nome: </span><br>
-    <span>Sobrenome: </span><br>
-    <span>E-mail: </span><br>
-    <span>Telefone: </span><br>
-    <span>Endereço: </span><br>
-    <span>Bairro: </span><br>
-    <h4>Dados da produto:</h4>
-    <span>Criado em: {{coleta.formata_data}}</span><br>
-    <span>Tipo de equipamento: {{coleta.tipo}}</span><br>
-    <span>Quantidade de equipamentos: {{coleta.quantidade}}</span><br>
-    <span>Aparelho está funcionando?: {{coleta.situacao}}</span><br>
-    <span>Descrição do(s) equipamento(s): {{coleta.descricao}}</span><br>
+
+    </div>
+        <div class="show_dados">   
+            <h4>Dados usuario</h4>
+            <span>ID: </span><br>
+            <span>Nome: </span><br>
+            <span>Sobrenome: </span><br>
+            <span>E-mail: </span><br>
+            <span>Telefone: </span><br>
+            <span>Endereço: </span><br>
+            <span>Bairro: </span><br>
+        </div>
+        <br>
+        <div class="show_dados">
+            <h4>Dados da produto</h4>
+            <span>Criado em: {{coleta.formata_data}}</span><br>
+            <span>Tipo de equipamento: {{coleta.tipo}}</span><br>
+            <span>Quantidade de equipamentos: {{coleta.quantidade}}</span><br>
+            <span>Aparelho está funcionando?: {{coleta.situacao}}</span><br>
+            <span>Descrição do(s) equipamento(s): {{coleta.descricao}}</span><br>
+        </div>
 </div>
 <br>
-<div>
-    <h5>Status da coleta:</h5>
-</div>
-<div>
-    <button type="button" class="btn btn-primary">Solicitada</button> 
-    <button type="button" class="btn btn-info">Em tratamento</button>
-    <button type="button" class="btn btn-warning">Agendada coleta</button>
-    <button type="button" class="btn btn-danger">Sem contato com cliente</button>
-    <button type="button" class="btn btn-success">Coleta realizada</button>
-</div>
-
-
+   
 {% endblock %}
