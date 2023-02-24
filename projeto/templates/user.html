@@ -13,7 +13,7 @@
 <body>
     <h1>Perfil usuário</h1>
 
-    <li>ID: {{user.id}}</li>
+    <li>ID Usuário: {{user.id}}</li>
     <li>USERNAME: {{user.username}}</li>
     <li>NOME: {{user.first_name}}</li>
     <li>SOBRENOME: {{user.last_name}}</li>
@@ -28,15 +28,16 @@
     <li>CIDADE: {{endereco.cidade}}</li>
     <li>ESTADO: {{endereco.estado}}</li>
     <li>CEP: {{endereco.cep}}</li>
+    <li>ID endereço: {{endereco.id}}</li>
     <br>
     <h3>Telefone</h3>
     <li>Telefone: {{telefone.formata_celular}}</li>
-    <li>ID: {{telefone.id}}</li>
+    <li>ID Telefone: {{telefone.id}}</li>
     <li></li>
     <br>
-    <a href="{{url_for('index')}}"><button type="button" class="btn btn-outline-success btn-sm">Retornar</button></a>
+    <a href="{{url_for('users')}}"><button type="button" class="btn btn-outline-success btn-sm">Retornar</button></a>
     <a href="{{url_for('delete', id=user.id)}}"><button type="button" class="btn btn-outline-danger btn-sm">Deletar</button></a>
-    <a href="{{url_for('coleta_usuario', id=user.id)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
+    <a href="#"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
     <br>
 
 </body>

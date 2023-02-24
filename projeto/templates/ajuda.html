@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style-index.css')}}" type="text/css">
+    <title>Home</title>
+</head>
+<body>
+    
+<div id="area-cabecalho">
+
+    <div id="area-logo">
+        <h1>Marques<span class="branco">Igor</span></h1>
+    </div>
+    <!--Inicio links principais de cabeçalho-->
+    <div id="area-menu">
+        {% if not current_user.is_authenticated %}
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">ENTRAR</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('link_ajuda')}}">Ajuda</a></button>     
+        <li>Olá, seja bem vinda(o), para solicitar coleta, favor realizar<a href="{{url_for('login')}}">login</a></li>
+        {% else %}
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('coleta_usuario', id=current_user.id)}}">SOLICITAR COLETA</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">SAIR</a></button>
+       <li>
+
+           Olá {{current_user.first_name}} {{current_user.last_name}}, seja bem vinda(o)
+       </li>
+
+       
+
+        <span></span>
+        {% endif %}
+    </div>
+
+    <div>
+        <div>
+            <h2>Seja bem vinda(o)!</h2>
+        </div>
+    <div>
+    <div>
+        <h5>Este canal é direcionado à conectar usuários de equipamentos
+            eletrônicos, e que precisam fazer o descarte correto.
+        </h5>
+        <br>
+        <h5>Primeira vez por aqui, clique em [ CADASTRAR ]</h5>
+        <p>Após preencher o formulário com seus dados, será direcionado à
+            pagina para fazer login.
+        </p>
+        <h5>Agora que já está cadastrado, já pode solicitar a coleta de seu
+            equipamento, basta clicar em [ SOLICITAR COLETA ]
+        </h5>
+        <h5>Agora que já preencheu o formulário para solicitar a coleta,
+            basta aguardar que um de nossos colaboradores irá entrar em 
+            contato, para agendar o melhor dia e horario para a coleta.
+        </h5>
+        <h5>Caso precise falar conosco, seguem nossos contatos.</h5>
+        <span>email@email.com</span> / <span> (xx) 1234-5678 </span>/ <span>(xx) 9.1234-5678</span>
+    </div>
+
+</div>
+</body>
+</html>

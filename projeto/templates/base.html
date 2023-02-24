@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/style-index.css')}}" type="text/css">
     {% endblock %}
 
-    {% block title %}<title>Home</title>{% endblock %}
+    <title> {% block title %}Home{% endblock %}</title>
 </head>
 <body>
     
@@ -30,7 +30,7 @@
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('login')}}">LOGIN</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('register')}}">CADASTRAR</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('users')}}">USUÁRIOS</a></button>
-        <button type="button" class="btn btn-outline-dark"><a href="#">Ajuda</a></button>     
+        <button type="button" class="btn btn-outline-dark"><a href="{{url_for('link_ajuda')}}">Ajuda</a></button>     
         {% else %}
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('index')}}">HOME</a></button>
         <button type="button" class="btn btn-outline-dark"><a href="{{url_for('logout')}}">LOGOUT</a></button>

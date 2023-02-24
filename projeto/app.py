@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
@@ -117,7 +118,7 @@ class SolicitaColeta(db.Model):
 
     @property
     def formata_data(self):
-        return f"{self.criado.day}/{self.criado.month}/{self.criado.year} as \
+        return f"{self.criado.day}/{self.criado.month}/{self.criado.year} ás \
             {self.criado.hour}:{self.criado.minute}"
 
     def formata_tipo(self):
@@ -129,6 +130,21 @@ class SolicitaColeta(db.Model):
     def formata_descricao(self):
         return {self.descricao}.title()
 
+
+class StatusColeta():
+    def __init__(self) -> None:
+        ...
+
+    def __str__(self):
+        return self.name
+
+    def status():
+        ["Solicitada",
+            "Sem contato com cliente",
+            "Em tratamento",
+            "Coleta agendada",
+            "Cancelada",
+            "Coleta realizada"]
 
 @app.route('/')
 def index():
@@ -166,6 +182,7 @@ def perfil(id):
 def login():
     """Login de usuário"""
     if request.method == 'POST':
+           
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
@@ -220,13 +237,12 @@ def register():
     return render_template("register.html")
 
 
-
 @app.route("/user/<int:id>/coleta/add", methods=["GET", "POST"])
 def coleta_usuario(id):
     user = User.query.get(id)
 
     if request.method == "POST":
-        
+
         coleta = SolicitaColeta()
         coleta.tipo = request.form['tipo']
         coleta.quantidade = request.form['quantidade']
@@ -252,9 +268,14 @@ def view_coleta():
 @app.route("/coleta/view/<int:id>")
 def show_coleta(id):
     coleta = SolicitaColeta.query.get(id)
+
     return render_template(
         "show_coleta.html",
         coleta=coleta)
+
+@app.route("/help")
+def link_ajuda():
+    return render_template("ajuda.html")
 
 
 if __name__ == "__main__":
