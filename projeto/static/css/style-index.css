@@ -106,3 +106,31 @@ h3{
     padding: 1px;
     margin: 1em;
 }
+
+/*Formatação show menu*/
+.show_dados{
+    width: auto;
+    height: auto;
+    margin-left: 47rem;
+    }
+div span{
+    text-align: center;
+    text-decoration-color: black;
+    font-size: 1.1rem;
+    border: 1px solid;
+    border-block: 1rem;
+}
+div h4{
+    text-align: auto;
+}
+
+.show_status{
+    margin-left: 1rem;
+}
+.lc_status{
+    margin-left: 1rem;
+}
+.lc_header{
+    text-align: center;
+    text-decoration:underline
+}
