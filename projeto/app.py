@@ -152,12 +152,14 @@ def index():
 
 
 @app.route("/users")
+@login_required
 def users():
     users = User.query.all()
     return render_template("users.html", users=users)
 
 
 @app.route("/user/delete/<int:id>")
+@login_required
 def delete(id):
     """Rota deletar usuário"""
     user = User.query.filter_by(id=id).first()
@@ -238,6 +240,7 @@ def register():
 
 
 @app.route("/user/<int:id>/coleta/add", methods=["GET", "POST"])
+@login_required
 def coleta_usuario(id):
     user = User.query.get(id)
 
@@ -257,6 +260,7 @@ def coleta_usuario(id):
 
 
 @app.route("/coleta/view")
+@login_required
 def view_coleta():
     solicita_coleta = SolicitaColeta.query.all()
     return render_template(
@@ -266,12 +270,14 @@ def view_coleta():
 
 
 @app.route("/coleta/view/<int:id>")
+@login_required
 def show_coleta(id):
     coleta = SolicitaColeta.query.get(id)
 
     return render_template(
         "show_coleta.html",
         coleta=coleta)
+
 
 @app.route("/help")
 def link_ajuda():
