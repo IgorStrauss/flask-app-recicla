@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, migrate
+from flask_migrate import Migrate
 from flask_login import LoginManager, UserMixin, \
     login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
