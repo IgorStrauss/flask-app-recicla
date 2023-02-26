@@ -131,20 +131,6 @@ class SolicitaColeta(db.Model):
         return {self.descricao}.title()
 
 
-class StatusColeta():
-    def __init__(self) -> None:
-        ...
-
-    def __str__(self):
-        return self.name
-
-    def status():
-        ["Solicitada",
-            "Sem contato com cliente",
-            "Em tratamento",
-            "Coleta agendada",
-            "Cancelada",
-            "Coleta realizada"]
 
 @app.route('/')
 def index():
@@ -184,7 +170,7 @@ def perfil(id):
 def login():
     """Login de usuário"""
     if request.method == 'POST':
-           
+
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
@@ -205,7 +191,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
 
 
 @app.route("/register", methods=["GET", "POST"])
