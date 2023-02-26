@@ -160,7 +160,6 @@ def login():
             flash('Credenciais incorretas - senha', 'danger')
             return redirect(url_for('login'))
         login_user(user)
-        #flash('Usuário logado com sucesso.')
         return redirect(url_for('index'))
     return render_template("login.html")
 
