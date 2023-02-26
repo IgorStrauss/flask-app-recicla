@@ -4,18 +4,18 @@
 
 
 {% for coleta in solicita_coleta %}
-
 <button type="button" class="btn btn-outline-danger"><a href="{{url_for('show_coleta', id=coleta.id)}}">Ordem de coleta numero: {{coleta.id}}</a></button>
+<br>
 
 <div>
+    
     <span>ID: {{coleta.user_id}}</span><br>
     <span>Nome: </span><br>
     <span>Sobrenome: </span><br>
     <span>E-mail: </span><br>
     <span>Telefone: </span><br>
     <span>Endereço: </span><br>
-    <span>Bairro: </span><br>
-
+    <span>Bairro: </span><br><br>
 
     <span>Criado em: {{coleta.criado}}</span><br>
     <span>Tipo de equipamento: {{coleta.tipo}}</span><br>
@@ -23,7 +23,7 @@
     <span>Aparelho está funcionando?: {{coleta.situacao}}</span><br>
     <span>Descrição do(s) equipamento(s): {{coleta.descricao}}</span><br>
  
-</div>
+</div><br>
 
 
 {% endfor %}

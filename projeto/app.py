@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from flask_login import LoginManager, UserMixin, \
@@ -50,7 +49,7 @@ class User(db.Model, UserMixin):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__()
         self.criado = datetime.now()
-        
+
     @property
     def formata_data(self):
         return f"{self.criado.day}/{self.criado.month}/{self.criado.year} as \
@@ -58,11 +57,11 @@ class User(db.Model, UserMixin):
 
     def __str__(self):
         return self.first_name
-    
+
     @property
     def firstname(self):
         return f"{self.first_name}".title()
-    
+
     @property
     def lastname(self):
         return f"{self.last_name}".title()
@@ -131,21 +130,6 @@ class SolicitaColeta(db.Model):
         return {self.descricao}.title()
 
 
-class StatusColeta():
-    def __init__(self) -> None:
-        ...
-
-    def __str__(self):
-        return self.name
-
-    def status():
-        ["Solicitada",
-            "Sem contato com cliente",
-            "Em tratamento",
-            "Coleta agendada",
-            "Cancelada",
-            "Coleta realizada"]
-
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -184,7 +168,7 @@ def perfil(id):
 def login():
     """Login de usuário"""
     if request.method == 'POST':
-           
+
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
@@ -205,7 +189,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
 
 
 @app.route("/register", methods=["GET", "POST"])
