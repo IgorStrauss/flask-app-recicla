@@ -19,3 +19,5 @@ start_db:
 	docker start flask-rec01
 	
  
+test:
+	pytest tests/ -v --cov=app
