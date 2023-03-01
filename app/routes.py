@@ -1,5 +1,5 @@
-from flask import flash, redirect, render_template, url_for, request
-from flask_login import login_required, logout_user, login_user
+from flask import flash, redirect, render_template, url_for, request, jsonify
+from flask_login import login_required, logout_user, login_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 from .models import User, Telefone, Endereco, SolicitaColeta
@@ -33,6 +33,7 @@ def init_app(app):
         user = User.query.get(id)
         endereco = Endereco.query.filter_by(user_id=id).first()
         telefone = Telefone.query.filter_by(user_id=id).first()
+
         return render_template(
             "user.html", user=user,
             endereco=endereco, telefone=telefone)
@@ -104,8 +105,10 @@ def init_app(app):
             coleta.quantidade = request.form['quantidade']
             coleta.situacao = request.form['situacao']
             coleta.descricao = request.form['descricao']
+            coleta.user_id = current_user.id
             db.session.add(coleta)
             db.session.commit()
+
             return redirect(url_for('index'))
 
         return render_template(
@@ -115,6 +118,7 @@ def init_app(app):
     @login_required
     def view_coleta():
         solicita_coleta = SolicitaColeta.query.all()
+
         return render_template(
             "ordem_coleta.html",
             solicita_coleta=solicita_coleta
@@ -124,11 +128,29 @@ def init_app(app):
     @login_required
     def show_coleta(id):
         coleta = SolicitaColeta.query.get(id)
-
+        user = db.session.query(User).filter_by(id=coleta.user_id).first()
+        telefone = db.session.query(Telefone).filter_by(id=coleta.user_id).first()
+        endereco = db.session.query(Endereco).filter_by(id=coleta.user_id).first()
         return render_template(
             "show_coleta.html",
-            coleta=coleta)
+            coleta=coleta,
+            user=user,
+            telefone=telefone,
+            endereco=endereco)
 
     @app.route("/help")
     def link_ajuda():
         return render_template("ajuda.html")
+
+    @app.route('/user_data')
+    @login_required
+    def get_user_data():
+        user_data = {
+            'id': current_user.id,
+            'username': current_user.username,
+            'email': current_user.email,
+            'first_name': current_user.first_name,
+            'last_name': current_user.last_name
+            }
+
+        return jsonify(user_data)
