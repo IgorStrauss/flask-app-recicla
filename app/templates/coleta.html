@@ -16,7 +16,7 @@
         <form action="{{url_for('coleta_usuario', id=user.id)}}" method="post">
 
             <div>
-                <input class="tipo" type="text" name="tipo" id="tipo" placeholder="Qual tipo de equipamento">
+                <input class="tipo" type="text" name="tipo" id="tipo" placeholder="Qual tipo de equipamento?">
             </div>
             <div>
                 <input class="quantidade" type="text" name="quantidade" id="quantidade" placeholder="Quantos equipamentos">
@@ -29,6 +29,8 @@
                 <input class="descricao" type="text" name="descricao" id="descricao" placeholder="Qual a situação do(s) aparelho(s)">
             </div>
             
+
+            <input type="hidden" name="user_id" value="{{ user.id }}">
             
             
             <div>

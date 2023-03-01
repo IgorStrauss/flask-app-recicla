@@ -12,25 +12,6 @@ def app():
     return create_app()
 
 
-@pytest.fixture
-def client():
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQL_DATABASE_URI"] = "sqlite:///"
-    app.config["WTF_CSRF_ENABLED"] = False
-    context = app.app_context()
-    context.push
-
-    db.create_all()
-
-    yield app.test_client()
-
-    db.session.remove()
-    db.drop_all()
-
-    context.pop()
-
-
 @pytest.fixture(scope='class')
 def user():
     user = User()
@@ -42,8 +23,8 @@ def user():
     yield user
     del user
 
-@pytest.fixture
-def usuario():
+@pytest.fixture(scope='class')
+def usuario(client):
     app.testing = True
     client = app.test_client()
     usuario = User()
@@ -62,7 +43,7 @@ def usuario():
 
 
 @pytest.fixture
-def usuario_autenticado():
+def usuario_autenticado(usuario):
     assert current_user.is_authenticated
     return usuario
 
@@ -97,3 +78,18 @@ def coleta():
     coleta.criado = datetime.now()
     yield coleta
     del coleta
+
+
+@pytest.fixture(scope='session')
+def test_app():
+    app.testing = True
+    app.config['WTF_CSRF_ENABLED'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    db.create_all()
+    yield app
+    db.drop_all()
+
+
+@pytest.fixture(scope='function')
+def test_client(test_app):
+    return test_app.test_client()

@@ -21,3 +21,7 @@ start_db:
  
 test:
 	pytest tests/ -v --cov=app
+
+
+test -w:
+	FLASK_ENV ward

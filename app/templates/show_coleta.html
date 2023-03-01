@@ -42,13 +42,13 @@
     </div>
         <div class="show_dados">   
             <h4>Dados usuario</h4>
-            <span>ID: </span><br>
-            <span>Nome: </span><br>
-            <span>Sobrenome: </span><br>
-            <span>E-mail: </span><br>
-            <span>Telefone: </span><br>
-            <span>Endereço: </span><br>
-            <span>Bairro: </span><br>
+            <span>ID: {{coleta.user_id}}</span><br>
+            <span>Nome: {{user.firstname}}</span><br>
+            <span>Sobrenome: {{user.lastname}}</span><br>
+            <span>E-mail: {{user.email}}</span><br>
+            <span>Telefone: {{telefone.formata_celular}}</span><br>
+            <span>Endereço: {{endereco.street}}</span><br>
+            <span>Bairro: {{endereco.bairro}}</span><br>
         </div>
         <br>
         <div class="show_dados">
