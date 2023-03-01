@@ -465,6 +465,14 @@ python-versions = "*"
 SQLAlchemy = "*"
 
 [[package]]
+name = "testcase"
+version = "0.1.0"
+description = "Run tabular unit tests"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -533,7 +541,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "af3a1e6faf214c1983435b86d119bda998460786324d2e71472601217b2c5a3f"
+content-hash = "77a6a9179c58142253c0d33c3b620c4c2d471ca86b1a0c64be2f393e0d34355f"
 
 [metadata.files]
 alembic = [
@@ -931,6 +939,10 @@ sqlalchemy = [
 ]
 sqlalchemy-serializer = [
     {file = "SQLAlchemy-serializer-1.4.1.tar.gz", hash = "sha256:c4cf3e3eebbffa5b46a77ddb886230e5d8c17fd0b9ddbd57eed1a837eb1463cc"},
+]
+testcase = [
+    {file = "testcase-0.1.0-py3-none-any.whl", hash = "sha256:da027ded9674259ab241b20beb45b01fa60d550fa78db89aef1c6b7e53996c5e"},
+    {file = "testcase-0.1.0.tar.gz", hash = "sha256:078a3e94ef7918934c3ac51a839daaaa32eca2406452c6dbc06225d2a656d100"},
 ]
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},

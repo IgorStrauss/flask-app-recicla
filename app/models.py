@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
             {self.criado.hour}:{self.criado.minute}"
 
     def __str__(self):
-        return self.first_name
+        return str(self.first_name)
 
     @property
     def firstname(self):
@@ -58,7 +58,7 @@ class Endereco(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __str__(self) -> str:
-        return self.__name__
+        return str(self.street)
 
 
 class Telefone(db.Model):
@@ -67,13 +67,16 @@ class Telefone(db.Model):
     celular = db.Column(db.String(14), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
+    def __repr__(self) -> str:
+        return f"classe telefone <{str(self.celular)}>"
+
     def __str__(self) -> str:
-        return self.__name__
+        return str(self.celular)
 
     @property
     def formata_celular(self):
         return f"({self.celular[:2]})\
-            {self.celular[2]} {self.celular[3:7]}-{self.celular[7:]}"
+    {self.celular[2]} {self.celular[3:7]}-{self.celular[7:]}"
 
 
 class SolicitaColeta(db.Model):
@@ -87,7 +90,6 @@ class SolicitaColeta(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__()
         self.criado = datetime.now()
 
     @property
@@ -95,11 +97,17 @@ class SolicitaColeta(db.Model):
         return f"{self.criado.day}/{self.criado.month}/{self.criado.year} ás \
             {self.criado.hour}:{self.criado.minute}"
 
+    @property
     def formata_tipo(self):
-        return {self.tipo}.title()
+        return f"{self.tipo}".title()
 
+    @property
     def formata_situacao(self):
-        return {self.situacao}.title()
+        return f"{self.situacao}".title()
 
+    @property
     def formata_descricao(self):
-        return {self.descricao}.title()
+        return f"{self.descricao}".title()
+
+    def __str__(self) -> str:
+        return str(self.tipo)
