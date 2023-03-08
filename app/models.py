@@ -1,6 +1,8 @@
-from app import db, login_manager
-from flask_login import UserMixin
 from datetime import datetime
+
+from flask_login import UserMixin
+
+from app import db, login_manager
 
 
 @login_manager.user_loader
@@ -16,6 +18,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     criado = db.Column(db.DateTime, nullable=False)
+    is_admin = db.Column(db.Boolean, default=True)
     endereco = db.relationship('Endereco', backref='user', uselist=False)
     telefone = db.relationship('Telefone', backref='user', uselist=False)
     solicitar_coleta = db.relationship(
