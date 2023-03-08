@@ -1,19 +1,17 @@
 SHELL := /bin/bash
 
-run -d:
 
+exp:
 	export FLASK_APP=app
 
 	export FLASK_ENV=development
 	
-	<adicionar caminho>
+run:
+	export FLASK_APP=app
 
-run -p:
-	export FLASK_APP=projeto
+	export FLASK_ENV=development
 
-	export FLASK_ENV=production
-	
-	<adicionar caminho>
+	flask run
 
 start_db:
 	docker start flask-rec01
@@ -25,3 +23,4 @@ test:
 
 test -w:
 	FLASK_ENV ward
+

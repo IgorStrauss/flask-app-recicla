@@ -1,8 +1,11 @@
-from flask import flash, redirect, render_template, url_for, request, jsonify
-from flask_login import login_required, logout_user, login_user, current_user
+from flask import (abort, flash, jsonify, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
+
 from app import db
-from .models import User, Telefone, Endereco, SolicitaColeta
+
+from .models import Endereco, SolicitaColeta, Telefone, User
 
 
 def init_app(app):
@@ -33,6 +36,9 @@ def init_app(app):
         user = User.query.get(id)
         endereco = Endereco.query.filter_by(user_id=id).first()
         telefone = Telefone.query.filter_by(user_id=id).first()
+        
+        if not user or user.id != current_user.id:
+            abort(401, 'Acesso negado!')
 
         return render_template(
             "user.html", user=user,
@@ -127,10 +133,17 @@ def init_app(app):
     @app.route("/coleta/view/<int:id>")
     @login_required
     def show_coleta(id):
+
         coleta = SolicitaColeta.query.get(id)
         user = db.session.query(User).filter_by(id=coleta.user_id).first()
-        telefone = db.session.query(Telefone).filter_by(id=coleta.user_id).first()
-        endereco = db.session.query(Endereco).filter_by(id=coleta.user_id).first()
+        telefone = (
+            db.session.query(Telefone).filter_by(id=coleta.user_id).first())
+        endereco = (
+            db.session.query(Endereco).filter_by(id=coleta.user_id).first())
+
+        if not coleta or coleta.user_id != current_user.id:
+            abort(401, 'Não encontrado coletas em seu usuário.')
+
         return render_template(
             "show_coleta.html",
             coleta=coleta,
